@@ -29,3 +29,28 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Ausi\SlugGenerator\SlugGenerator: ~
+    Symfony\Component\Cache\Adapter\FilesystemAdapter: ~
+    Symfony\Component\Finder\Finder: ~
+
+    app.service.quote_handler:
+        class: App\Service\QuoteHandler
+        arguments:
+            - '@Symfony\Component\HttpKernel\KernelInterface'
+            - '@Ausi\SlugGenerator\SlugGenerator'
+            - '@Symfony\Component\Cache\Adapter\FilesystemAdapter'
+            - 3600
+            - '@App\Service\SourceInterface'
+    
+    App\Service\QuoteHandler: '@app.service.quote_handler'
+
+    app.service.json_source_handler:
+        class: App\Service\JsonSourceHandler
+        arguments:
+            - '@Symfony\Component\Finder\Finder'
+            - 'data'
+    
+    app.service.api_source_handler:
+        class: App\Service\ApiSourceHandler
+
+    App\Service\SourceInterface: '@app.service.json_source_handler'
