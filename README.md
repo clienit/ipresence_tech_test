@@ -1,5 +1,10 @@
 # iPresence Tech Test 
 
-TO TEST: php bin/phpunit
+TO RUN: 
+composer install
+symfony server:start
 
-TO RUN: symfony server:start
+TEST CALL:
+curl -s http://localhost:8000/shout/steve-jobs?limit=2
+
+TO TEST: php bin/phpunit
